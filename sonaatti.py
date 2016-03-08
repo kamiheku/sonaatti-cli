@@ -21,21 +21,21 @@ restaurants = {'lozzi':       'http://www.sonaatti.fi/lozzi/',
                'wilhelmiina': 'http://www.sonaatti.fi/wilhelmiina/',
                'uno':         'http://www.sonaatti.fi/uno/'}
 
-def cleanup(food):
-    """Removes unnecessary tags and whitespace from a 'foodstring'
+def cleanup(dish):
+    """Removes unnecessary tags and whitespace from a 'dishstring'
     
     Args:
-        food (str): The string to be cleaned up
+        dish (str): The string to be cleaned up
     
     Returns:
         str: A cleaned up string
     """
     # Removes dietary tags such as #VL, #G etc.
-    food = re.sub("#[\S]* *", " ", food)
+    dish = re.sub("#[\S]* *", " ", dish)
     # Replaces multiple spaces with a single one
-    food = re.sub("  +", " ", food)
-    food = food.strip()
-    return food
+    dish = re.sub("  +", " ", dish)
+    dish = dish.strip()
+    return dish
 
 def getHtmlData(restaurant):
     """Gets the data from the restaurant's site.
@@ -53,20 +53,20 @@ def getHtmlData(restaurant):
 
 @click.command()
 @click.argument('restaurant')
-def getFoods(restaurant):
+def getDishes(restaurant):
     """Prints the menu for a given restaurant.
     Args:
         restaurant (str): The name of the restaurant
     """
     htmldata = getHtmlData(restaurant)
     soup = BeautifulSoup(htmldata, "html.parser")
-    foods = soup.find(class_='ruuat')
-    foods = foods.find_all('p')
-    foods = list(map(lambda x: x.string, foods))
-    foods = filter(None, foods)
-    foods = list(map(cleanup, foods))
-    for food in foods:
-        print(food)
+    dishes = soup.find(class_='ruuat')
+    dishes = dishes.find_all('p')
+    dishes = list(map(lambda x: x.string, dishes))
+    dishes = filter(None, dishes)
+    dishes = list(map(cleanup, dishes))
+    for dish in dishes:
+        print(dishes)
 
 if __name__ == "__main__":
-    getFoods()
+    getDishes()
