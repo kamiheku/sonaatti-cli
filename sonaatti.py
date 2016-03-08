@@ -14,11 +14,6 @@ restaurants = {'lozzi':       'http://www.sonaatti.fi/lozzi/',
                'wilhelmiina': 'http://www.sonaatti.fi/wilhelmiina/',
                'uno':         'http://www.sonaatti.fi/uno/'}
 
-def stripEmpty(foods):
-    while None in foods:
-        foods.remove(None)
-    return foods
-
 def stripSpecs(food):
     # Let's strip the *'s ("healthy choice")
     food = food.replace("*", "")
@@ -44,7 +39,7 @@ def getFoods(restaurant):
     foods = soup.find(class_='ruuat')
     foods = foods.find_all('p')
     foods = list(map(lambda x: x.string, foods))
-    foods = stripEmpty(foods)
+    foods = filter(None, foods)
     foods = list(map(stripSpecs, foods))
     for food in foods:
         print(food)
