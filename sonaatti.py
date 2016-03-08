@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from bs4 import BeautifulSoup
-from sys import argv
 import requests
 import re
 import click
@@ -23,12 +22,10 @@ def stripEmpty(foods):
 def stripSpecs(food):
     # Let's strip the *'s ("healthy choice")
     food = food.replace("*", "")
-    # Random annoying inconcistencies
-    food = food.replace("Veg", "")
     # food = re.sub("  ", " ", food)
     food = food.replace("  ", " ")
     # And the dietary stuff too
-    exp = "#[A-Z#, ]*( |$)"
+    exp = "#[\S]* *"
     food = re.sub(exp, " ", food)
     food = re.sub("  +", " ", food)
     return food
