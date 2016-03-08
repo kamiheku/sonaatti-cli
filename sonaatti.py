@@ -14,15 +14,12 @@ restaurants = {'lozzi':       'http://www.sonaatti.fi/lozzi/',
                'wilhelmiina': 'http://www.sonaatti.fi/wilhelmiina/',
                'uno':         'http://www.sonaatti.fi/uno/'}
 
-def stripSpecs(food):
-    # Let's strip the *'s ("healthy choice")
-    food = food.replace("*", "")
-    # food = re.sub("  ", " ", food)
-    food = food.replace("  ", " ")
-    # And the dietary stuff too
-    exp = "#[\S]* *"
-    food = re.sub(exp, " ", food)
+def cleanup(food):
+    # Removes dietary tags such as #VL, #G etc.
+    food = re.sub("#[\S]* *", " ", food)
+    # Replaces multiple spaces with a single one
     food = re.sub("  +", " ", food)
+    food = food.strip()
     return food
 
 def getHtmlData(restaurant):
@@ -40,7 +37,7 @@ def getFoods(restaurant):
     foods = foods.find_all('p')
     foods = list(map(lambda x: x.string, foods))
     foods = filter(None, foods)
-    foods = list(map(stripSpecs, foods))
+    foods = list(map(cleanup, foods))
     for food in foods:
         print(food)
 
