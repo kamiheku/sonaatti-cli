@@ -44,8 +44,5 @@ def getFoods(restaurant):
     for food in foods:
         print(food)
 
-# def main():
-#     getFoods(restaurant)
-
 if __name__ == "__main__":
     getFoods()
