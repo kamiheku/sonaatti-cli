@@ -66,7 +66,7 @@ def getDishes(restaurant):
     dishes = filter(None, dishes)
     dishes = list(map(cleanup, dishes))
     for dish in dishes:
-        print(dishes)
+        print(dish)
 
 if __name__ == "__main__":
     getDishes()
