@@ -23,10 +23,10 @@ restaurants = {'lozzi':       'http://www.sonaatti.fi/lozzi/',
 
 def cleanup(dish):
     """Removes unnecessary tags and whitespace from a 'dishstring'
-    
+
     Args:
         dish (str): The string to be cleaned up
-    
+
     Returns:
         str: A cleaned up string
     """
@@ -60,8 +60,9 @@ def getDishes(restaurant):
     """
     htmldata = getHtmlData(restaurant)
     soup = BeautifulSoup(htmldata, "html.parser")
-    dishes = soup.find(class_='ruuat')
-    dishes = dishes.find_all('p')
+    # The dishes can be found inside p's inside a div.ruuat
+    dishes = soup.find(class_='ruuat').find_all('p')
+    # Convert tags to strings and do some tidying up
     dishes = list(map(lambda x: x.string, dishes))
     dishes = filter(None, dishes)
     dishes = list(map(cleanup, dishes))
