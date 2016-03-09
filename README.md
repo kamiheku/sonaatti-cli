@@ -10,3 +10,13 @@ Usage:
 ```
 sonaatti.py RESTAURANT
 ```
+
+Example:
+```
+~ » sonaatti tilia
+Bolognesekastiketta
+Nakkikeittoa
+Intialaista sieni-kookoscurrya
+Salaatti: Katkarapu-pastasalaattia
+Paistopiste: Broileri-ananashampurilainen
+```
