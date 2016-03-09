@@ -46,7 +46,14 @@ def getHtmlData(restaurant):
     Returns:
         str: The HTML of the site
     """
-    url = restaurants[restaurant]
+    try:
+        url = restaurants[restaurant]
+    except KeyError:
+        print("Restaurant '%s' not found!\n" %restaurant)
+        print("Available restaurants:")
+        for r in restaurants.keys():
+            print(r)
+        exit(1)
     r = requests.get(url)
     htmldata = r.text
     return htmldata
