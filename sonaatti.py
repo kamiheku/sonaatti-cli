@@ -1,80 +1,33 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-"""
-sonaatti.py
-Usage: sonaatti.py RESTAURANT
-Fetches the menu for a given Sonaatti student restaurant from sonaatti.fi.
-"""
+import urllib.request
+import time
+import json
+from datetime import date
 
-from bs4 import BeautifulSoup
-import requests
-import re
-import click
+RESTAURANT_IDS = { 
+    "libri" : "137814",
+    "lozzi" : "137828",
+    "syke" : "137833",
+    "tilia" : "137838",
+    "kvarkki" : "137876",
+    "ylisto" : "137871",
+    "piato" : "110874",
+    "wilhelmiina" : "137866",
+    "uno" : "137861",
+    "normaalikoulu" : "138323",
+    "novelli" : "137881"
+}
 
-# A listing of the restaurants with their corresponding URL's
-restaurants = {'lozzi':       'http://www.sonaatti.fi/lozzi/',
-               'syke':        'http://www.sonaatti.fi/syke/',
-               'tilia':       'http://www.sonaatti.fi/ravintola_t/',
-               'kvarkki':     'http://www.sonaatti.fi/kvarkki/',
-               'ylisto':      'http://www.sonaatti.fi/ylisto/',
-               'piato':       'http://www.sonaatti.fi/piato/',
-               'wilhelmiina': 'http://www.sonaatti.fi/wilhelmiina/',
-               'uno':         'http://www.sonaatti.fi/uno/'}
+today_dash = date.today().strftime("%Y-%-m-%-d")
+today_period = date.today().strftime("%-d.%-m.%Y")
+data = json.loads(urllib.request.urlopen("http://www.sonaatti.fi/api/restaurant/menu/week?language=fi&restaurantPageId={}&weekDate={}".format(RESTAURANT_IDS['piato'], today_dash)).read())
 
-def cleanup(dish):
-    """Removes unnecessary tags and whitespace from a 'dishstring'
-
-    Args:
-        dish (str): The string to be cleaned up
-
-    Returns:
-        str: A cleaned up string
-    """
-    # Removes dietary tags such as #VL, #G etc.
-    dish = re.sub("#[\S]* *", " ", dish)
-    # Replaces multiple spaces with a single one
-    dish = re.sub("  +", " ", dish)
-    dish = dish.strip()
-    return dish
-
-def getHtmlData(restaurant):
-    """Gets the data from the restaurant's site.
-
-    Args:
-        restaurant (str): The name of the restaurant
-
-    Returns:
-        str: The HTML of the site
-    """
-    try:
-        url = restaurants[restaurant]
-    except KeyError:
-        print("Restaurant '%s' not found!\n" %restaurant)
-        print("Available restaurants:")
-        for r in restaurants.keys():
-            print(r)
-        exit(1)
-    r = requests.get(url)
-    htmldata = r.text
-    return htmldata
-
-@click.command()
-@click.argument('restaurant')
-def getDishes(restaurant):
-    """Prints the menu for a given restaurant.
-    Args:
-        restaurant (str): The name of the restaurant
-    """
-    htmldata = getHtmlData(restaurant)
-    soup = BeautifulSoup(htmldata, "html.parser")
-    # The dishes can be found inside p's inside a div.ruuat
-    dishes = soup.find(class_='ruuat').find_all('p')
-    # Convert tags to strings and do some tidying up
-    dishes = list(map(lambda x: x.string, dishes))
-    dishes = filter(None, dishes)
-    dishes = list(map(cleanup, dishes))
-    for dish in dishes:
-        print(dish)
-
-if __name__ == "__main__":
-    getDishes()
+for day in data['LunchMenus']:
+    if day['Date'] == today_period:
+        for lunch in day['SetMenus']:
+            if lunch['Name'] != None:
+                print(lunch['Name'])
+                for meal in lunch['Meals']:
+                    print(" "*4 + meal['Name'])
+    break
