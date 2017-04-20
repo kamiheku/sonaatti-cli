@@ -13,10 +13,21 @@ sonaatti.py RESTAURANT
 
 Example:
 ```
-~ » sonaatti tilia
-Bolognesekastiketta
-Nakkikeittoa
-Intialaista sieni-kookoscurrya
-Salaatti: Katkarapu-pastasalaattia
-Paistopiste: Broileri-ananashampurilainen
+~ ── sonaatti piato
+Piato
+
+Kasvislounas
+    Porkkana-pestolasagnettea
+    Vegaanille: Soija-kasvispasta vuokaa, A, G, Veg
+Lounas
+    Sitruunakuorrutettua seitiä
+    Punajuuri-saksanpähkinähummus -jogurttikastiketta
+    Härkää curry-inkiväärikastikkeessa
+Keittolounas
+    Siskonmakkarakeittoa
+Paistopiste
+    Paahdettu broilerinfilee
+    Tomaatti-vuohenjuustokastiketta
+Jälkiruoka
+    Mansikkavispipuuroa
 ```
