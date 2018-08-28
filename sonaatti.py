@@ -13,17 +13,20 @@ import json
 import click
 
 RESTAURANT_IDS = {
-    "libri": "137814",
-    "lozzi": "137828",
-    "syke": "137833",
-    "tilia": "137838",
-    "kvarkki": "137876",
-    "ylisto": "137871",
-    "piato": "110874",
-    "wilhelmiina": "137866",
-    "uno": "137861",
-    "normaalikoulu": "138323",
-    "novelli": "137881"
+    "maija": "207659",
+    "piato": "207735",
+    "tilia": "207412",
+    "libri": "207559",
+    "cafe-libri": "207643",
+    "lozzi": "207272",
+    "belvedere": "207354",
+    "syke": "207483",
+    "uno": "207190",
+    "ylisto": "207103",
+    "kvarkki": "207038",
+    "rentukka": "206838",
+    "novelli": "206964",
+    "normaalikoulu": "206878"
 }
 
 API_URL = "http://www.sonaatti.fi/api/restaurant/menu/week?language=fi&restaurantPageId={}&weekDate={}"
